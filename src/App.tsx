@@ -17,6 +17,9 @@ function App() {
         <Link to="/">
           <span>Cat Tracker</span>
         </Link>
+        <div className="profile-img">
+          <img src="src/assets/pfp.png"></img>
+        </div>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
