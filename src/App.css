@@ -55,3 +55,8 @@ body {
 #map {
   height: 180px;
 }
+
+.profile-img {
+  border: 1px solid red;
+ /* trabalhar aqui*/
+}
