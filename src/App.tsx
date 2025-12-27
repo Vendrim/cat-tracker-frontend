@@ -18,7 +18,7 @@ function App() {
           <span>Cat Tracker</span>
         </Link>
         <div className="profile-img">
-          <span>Imagem</span>
+          <img src="src/assets/pfp.png"></img>
         </div>
       </nav>
       <Routes>

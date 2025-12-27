@@ -13,11 +13,12 @@ body {
 
 .menu-bar {
   display: flex;
+  gap: 500px;
   width: 100%;
   background-color: rgb(97, 65, 211);
-  padding: 20px;
+  padding: 0px;
   color: white;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -57,6 +58,17 @@ body {
 }
 
 .profile-img {
-  border: 1px solid red;
- /* trabalhar aqui*/
+  margin: 15px;
+  display: flex;
+  
+  border-radius: 50%;
+
+  justify-content: flex-end;
+  /* trabalhar aqui*/
+}
+
+.profile-img img {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
 }
