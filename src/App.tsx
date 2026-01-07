@@ -1,5 +1,6 @@
 import "./App.css";
-import Home from "./pages/Home";
+import Login from "./pages/login/Login";
+import Home from "./pages/home/Home";
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
@@ -12,17 +13,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* Navigation */}
-      <nav className="menu-bar">
-        <Link to="/">
-          <span>Cat Tracker</span>
-        </Link>
-        <div className="profile-img">
-          <img src="src/assets/pfp.png"></img>
-        </div>
-      </nav>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
