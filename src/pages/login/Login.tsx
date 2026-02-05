@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './Login.css'
+import styles from './Login.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthApi } from '../../api/authApi'
 import { LoginUserDto } from '../../api/entities'
@@ -22,37 +22,35 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="main-container">
-            <div className="login-form">
-                <div className="login-header">
-                    <span className="header-text">Log In</span>
-                </div>
-                <div className="header-desc">
+        <div className={styles.mainContainer}>
+            <div className={styles.loginHeader}>
+                <span className={styles.headerText}>Log In</span>
+            </div>
+            <div className={styles.loginForm}>
+                <div className={styles.headerDesc}>
                     <span>
                         Geben Sie ihre E-Mail Adresse oder Ihren Benutzernamen
                         und Ihren Password ein, um sich einzuloggen.
                     </span>
                 </div>
-                <div className="login-inputs">
+                <div className={styles.loginInputs}>
                     <span>Benutzername: </span>
                     <input
-                        id="username-input"
                         value={username}
                         type="text"
                         onChange={(e) => setUsername(e.currentTarget.value)}
                     />
                     <span>Password: </span>
                     <input
-                        id="password-input"
                         value={password}
                         type="text"
                         onChange={(e) => setPassword(e.currentTarget.value)}
                     />
                 </div>
-                <div className="login-btn-container">
+                <div className={styles.loginBtnContainer}>
                     <button onClick={handleLogin}>Login</button>
                 </div>
-                <div className="register-container">
+                <div className={styles.registerContainer}>
                     <span>
                         Noch kein Account, dann registriere dich{' '}
                         <Link to="/register">hier</Link>
