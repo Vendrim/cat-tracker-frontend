@@ -13,17 +13,11 @@ body {
 
 .menu-bar {
   display: flex;
-  gap: 500px;
   width: 100%;
   background-color: rgb(97, 65, 211);
   padding: 0px;
   color: white;
-  justify-content: flex-end;
   align-items: center;
-}
-
-.menu-bar span {
-  margin: auto;
 }
 
 .menu-bar a {
@@ -31,6 +25,8 @@ body {
   transition: all 0.24s;
   text-decoration: none;
   font-weight: bold;
+  width: 100%;
+  text-align: center;
 }
 
 .menu-bar a:hover {
