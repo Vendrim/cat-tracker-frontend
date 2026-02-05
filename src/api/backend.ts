@@ -13,6 +13,7 @@ export class BackendClient {
         this.token = localStorage.getItem('jwt')
     }
 
+    // @ts-ignore
     private async request<T>(
         method: HttpMethod,
         endpoint: string,

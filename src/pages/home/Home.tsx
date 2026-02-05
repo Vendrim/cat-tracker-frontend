@@ -1,6 +1,7 @@
 import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import Layout from "../../layouts/layout";
+import ImageUpload from "../../components/ImageUpload";
 
 export default function Home() {
   const position: LatLngExpression = [37.0353607, -7.8377805];
@@ -12,6 +13,9 @@ export default function Home() {
           <div className="content-card">
             <span>Here you can find/search your cat:</span>
           </div>
+        </div>
+        <div>
+          <ImageUpload/>
         </div>
         <MapContainer
           center={position}
