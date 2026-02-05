@@ -4,18 +4,19 @@ function ImageUpload() {
     const [file, setFile] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
+    // @ts-ignore
     const uploadImage = async () => {
         const formData = new FormData();
         formData.append("file", file);
 
-        const res = await fetch("http://localhost:8082/api/images/upload", {
+        const res = await fetch("http://localhost:8080/api/images/upload", {
             method: "POST",
             body: formData
         });
 
         const filename = await res.text();
 
-        setImageUrl(`http://localhost:8082/api/images/${filename}`);
+        setImageUrl(`http://localhost:8080/api/images/${filename}`);
     };
 
     return (
