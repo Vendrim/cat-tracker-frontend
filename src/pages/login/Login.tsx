@@ -39,12 +39,22 @@ export default function LoginPage() {
                         value={username}
                         type="text"
                         onChange={(e) => setUsername(e.currentTarget.value)}
+                        onKeyUp={(e) => {
+                            if (e.key === 'Enter') {
+                                handleLogin()
+                            }
+                        }}
                     />
                     <span>Password: </span>
                     <input
                         value={password}
                         type="text"
                         onChange={(e) => setPassword(e.currentTarget.value)}
+                        onKeyUp={(e) => {
+                            if (e.key === 'Enter') {
+                                handleLogin()
+                            }
+                        }}
                     />
                 </div>
                 <div className={styles.loginBtnContainer}>
