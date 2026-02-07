@@ -6,7 +6,7 @@ export interface BackendClientOptions {
 }
 
 export class BackendClient {
-    private baseUrl: string = 'http://localhost:8080/'
+    private baseUrl: string = import.meta.env.VITE_BACKEND_URL
     private token: string | null
 
     constructor() {
