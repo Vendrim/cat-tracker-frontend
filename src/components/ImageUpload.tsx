@@ -9,14 +9,14 @@ function ImageUpload() {
         const formData = new FormData();
         formData.append("file", file);
 
-        const res = await fetch("http://localhost:8080/api/images/upload", {
+        const res = await fetch(import.meta.env.VITE_BACKEND_URL+"api/images/upload", {
             method: "POST",
             body: formData
         });
 
         const filename = await res.text();
 
-        setImageUrl(`http://localhost:8080/api/images/${filename}`);
+        setImageUrl(`${import.meta.env.VITE_BACKEND_URL}api/images/${filename}`)
     };
 
     return (
