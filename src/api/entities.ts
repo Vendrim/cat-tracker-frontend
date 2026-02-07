@@ -14,3 +14,17 @@ export interface LoginUserDto {
     username: string
     password: string
 }
+
+export interface Device {
+    id: number
+    identifier: string
+    userId: number
+}
+
+export interface DeviceLocation {
+    id: number
+    latitude: number
+    longitude: number
+    timestamp: string | number
+    deviceIdentifier: string
+}

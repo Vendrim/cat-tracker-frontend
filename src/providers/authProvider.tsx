@@ -5,6 +5,7 @@ import {
     useState,
     ReactNode,
 } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 interface AuthContextValue {
     token: string | null
@@ -19,12 +20,20 @@ const TOKEN_KEY = 'jwt'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [token, setToken] = useState<string | null>(null)
+    const navigate = useNavigate()
+    const location = useLocation()
 
     // Load token on app startup
     useEffect(() => {
         const storedToken = localStorage.getItem(TOKEN_KEY)
         if (storedToken) {
             setToken(storedToken)
+        }
+        if (
+            (!storedToken && location.pathname !== '/') ||
+            location.pathname !== '/register'
+        ) {
+            navigate('/')
         }
     }, [])
 
