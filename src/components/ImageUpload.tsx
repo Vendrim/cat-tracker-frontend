@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 function ImageUpload() {
-    const [file, setFile] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-    // @ts-ignore
+
     const uploadImage = async () => {
         const formData = new FormData();
         formData.append("file", file);
