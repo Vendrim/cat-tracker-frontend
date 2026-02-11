@@ -1,13 +1,16 @@
 import { LatLngExpression } from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Layout from '../../layouts/layout'
-import ImageUpload from '../../components/ImageUpload'
+
 import { DeviceApi } from '../../api/deviceApi'
 import { useEffect, useState } from 'react'
 import { LocationApi } from '../../api/locationApi'
 import { Device, DeviceLocation } from '../../api/entities'
 
 export default function Home() {
+
+
+
     const [position, setPosition] = useState<LatLngExpression>()
 
     const [devices, setDevices] = useState([])
@@ -60,7 +63,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div>
-                    <ImageUpload />
+Ich bin ein text
                 </div>
                 {position && (
                     <MapContainer
