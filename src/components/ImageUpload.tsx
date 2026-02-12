@@ -1,28 +1,27 @@
-import { useCallback, useState } from 'react'
+import { useState } from "react"
+import { ImageApi } from "../api/imageApi"
+
 type Props = {
     onUpload: (url: string) => void
 }
 
-function ImageUpload({ onUpload }: Props) {
+export default function ImageUpload({ onUpload }: Props) {
     const [file, setFile] = useState<File | null>(null)
+    const imageApi = new ImageApi()
 
-    // @ts-ignore
-    const uploadImage = useCallback(async () => {
+    const uploadImage = async () => {
         if (!file) return
 
-        const formData = new FormData()
-        formData.append('file', file)
+        try {
+            const filename = await imageApi.uploadImage(file)
 
-        const res = await fetch('http://localhost:8080/api/images/upload', {
-            method: 'POST',
-            body: formData,
-        })
+            const imageUrl = `http://localhost:8080/api/images/${filename}`
 
-        const filename = await res.text()
-        const url = `http://localhost:8080/api/images/${filename}`
-
-        onUpload(url) // 👈 Übergabe an Home
-    }, [file, onUpload])
+            onUpload(imageUrl)
+        } catch (error) {
+            console.error("Upload failed:", error)
+        }
+    }
 
     return (
         <div>
@@ -32,10 +31,9 @@ function ImageUpload({ onUpload }: Props) {
                     setFile(e.target.files?.[0] ?? null)
                 }
             />
-            <button onClick={uploadImage}>Upload</button>
+            <button onClick={uploadImage}>
+                Upload
+            </button>
         </div>
     )
 }
-
-export default ImageUpload
-

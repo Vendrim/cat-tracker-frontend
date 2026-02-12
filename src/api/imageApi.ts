@@ -1,16 +1,21 @@
-import {BackendClient} from "./backend";
-import {IMAGE_DOWNLOAD, IMAGE_UPLOAD} from "./endpoints";
+import { BackendClient } from "./backend"
+import { IMAGE_DOWNLOAD, IMAGE_UPLOAD } from "./endpoints"
 
 export class ImageApi {
-    private backend = new BackendClient();
+    private backend = new BackendClient()
 
-    // TODO: siehe unten
-    postImage(file: any): Promise<any> {
-        return this.backend.post(IMAGE_UPLOAD, file);
+    async uploadImage(file: File): Promise<string> {
+        const formData = new FormData()
+        formData.append("file", file)
+
+        return this.backend.post<string>(
+            IMAGE_UPLOAD,
+            formData,
+            true // requiresAuth
+        )
     }
 
-    //TODO: sicher implementieren (sicher hheißt hier mit JWT Token)
-    getImage(filename: string) : Promise<any> {
-        return this.backend.get(IMAGE_DOWNLOAD.replace("{filename}", filename));
+    async getImageUrl(filename: string): Promise<string> {
+        return `${this.backend['baseUrl']}${IMAGE_DOWNLOAD.replace("{filename}", filename)}`
     }
 }
