@@ -9,7 +9,7 @@ export class LocationApi {
         return this.backend.get(
             LOCATIONS_FOR_DEVICE.replace(
                 '{deviceIdentifier}',
-                device.identifier
+                device.id
             )
         )
     }
