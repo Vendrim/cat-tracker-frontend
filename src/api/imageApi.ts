@@ -1,24 +1,18 @@
-import { BackendClient } from "./backend"
-import { IMAGE_DOWNLOAD, IMAGE_UPLOAD } from "./endpoints"
-import {File} from './entities'
+import { BackendClient } from './backend'
+import { IMAGE_DOWNLOAD, IMAGE_UPLOAD } from './endpoints'
+import { ImageUploadResponse } from './entities'
 
 export class ImageApi {
     private backend = new BackendClient()
 
-
-    async uploadImage(file: File): Promise<string> {
+    async uploadImage(file: File): Promise<ImageUploadResponse> {
         const formData = new FormData()
-        formData.append("file", file)
+        formData.append('file', file)
 
-        const response = await this.backend.post<{ filename: string }>(
-            IMAGE_UPLOAD,
-            formData,
-        )
-
-        return response.filename
+        return this.backend.post(IMAGE_UPLOAD, formData)
     }
 
-    getImage(filename:string){
-        return this.backend.get(IMAGE_DOWNLOAD.replace("{filename}", filename));
+    getImage(filename: string) {
+        return this.backend.get(IMAGE_DOWNLOAD.replace('{fileName}', filename))
     }
 }

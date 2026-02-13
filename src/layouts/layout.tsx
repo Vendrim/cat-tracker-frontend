@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ImageUpload from '../components/ImageUpload'
 import defaultAvatar from '../assets/pfp.png'
 import '../layout.css'
+import { ImageApi } from '../api/imageApi'
 
 type Props = {
     children: React.ReactNode
@@ -10,9 +11,28 @@ type Props = {
 // ReactNode erlaubt auch Strings, Fragments, Arrays (Robuster für Layouts)
 
 export default function Layout({ children }: Props) {
-    const [imageUrl, setImageUrl] = useState<string>(defaultAvatar)
+    const imageUrl = defaultAvatar
 
+    const [imageFileName, setImageFileName] = useState<string>()
     const [isOpen, setIsOpen] = useState(false)
+    const [imageData, setImageData] = useState()
+
+    const imageApi = new ImageApi()
+
+    useEffect(() => {
+        if (
+            imageFileName !== undefined &&
+            imageFileName !== null &&
+            imageFileName.length > 0
+        ) {
+            imageApi
+                .getImage(imageFileName) //
+                .then((response) => {
+                    setImageData(response?.data)
+                    console.log(response)
+                })
+        }
+    }, [imageFileName])
 
     return (
         <>
@@ -22,7 +42,11 @@ export default function Layout({ children }: Props) {
                 </Link>
                 <div className="profile-img">
                     <img
-                        src={imageUrl}
+                        src={
+                            imageData
+                                ? `data:image/png;base64,${imageData}`
+                                : imageUrl
+                        }
                         alt="Profile"
                         onClick={() => setIsOpen(true)}
                         style={{ cursor: 'pointer' }}
@@ -39,8 +63,8 @@ export default function Layout({ children }: Props) {
                         <h3>Profilbild ändern</h3>
 
                         <ImageUpload
-                            onUpload={(url) => {
-                                setImageUrl(url)
+                            onUpload={(filename) => {
+                                setImageFileName(filename)
                                 setIsOpen(false) // Modal schließen
                             }}
                         />

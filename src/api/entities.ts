@@ -29,6 +29,6 @@ export interface DeviceLocation {
     deviceIdentifier: string
 }
 
-export interface File{
-    filename: string;
+export interface ImageUploadResponse {
+    fileName: string
 }
