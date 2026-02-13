@@ -32,3 +32,11 @@ export interface DeviceLocation {
 export interface ImageUploadResponse {
     fileName: string
 }
+
+export interface Image {
+    id: string
+    filename: string
+    contentType: string
+    data: string
+    uploadedAt: string
+}
