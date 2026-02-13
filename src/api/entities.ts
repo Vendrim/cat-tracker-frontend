@@ -28,3 +28,7 @@ export interface DeviceLocation {
     timestamp: string | number
     deviceIdentifier: string
 }
+
+export interface File{
+    filename: string;
+}

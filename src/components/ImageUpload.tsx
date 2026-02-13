@@ -13,11 +13,16 @@ export default function ImageUpload({ onUpload }: Props) {
         if (!file) return
 
         try {
-            const filename = await imageApi.uploadImage(file)
+            //const serverFile = await imageApi.uploadImage(file)
 
-            const imageUrl = `http://localhost:8080/api/images/${filename}`
-
+            //const imageUrl = `http://localhost:8080/api/images/${serverFile?.filename}`
+            //let imageUrl
+            //imageUrl= imageApi.getImageUrl(serverFile);
+            //onUpload(imageUrl)
+            const serverFilename = await imageApi.uploadImage(file)
+            const imageUrl = imageApi.getImage(serverFilename)
             onUpload(imageUrl)
+
         } catch (error) {
             console.error("Upload failed:", error)
         }
