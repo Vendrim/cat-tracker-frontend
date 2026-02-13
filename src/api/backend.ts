@@ -5,6 +5,10 @@ export interface BackendClientOptions {
     getToken?: () => string | null // token provider (e.g. from localStorage)
 }
 
+
+//Explanation:
+// Using FormData it isn't allowed to sed Content-Type by yourself.
+
 export class BackendClient {
     private baseUrl: string = import.meta.env.VITE_BACKEND_URL
     private token: string | null
@@ -13,28 +17,38 @@ export class BackendClient {
         this.token = localStorage.getItem('jwt')
     }
 
-    // @ts-ignore
     private async request<T>(
         method: HttpMethod,
         endpoint: string,
         body?: unknown,
         requiresAuth: boolean = true
     ): Promise<T> {
-        const headers: HeadersInit = {
-            'Content-Type': 'application/json',
-        }
 
-        if (requiresAuth && this.token) {
-            const token = this.token
+        const headers: HeadersInit = {}
+
+        // JWT setzen
+        if (requiresAuth) {
+            const token = localStorage.getItem('jwt')
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`
             }
         }
 
+        // Nur JSON-Header setzen wenn body KEIN FormData ist
+        const isFormData = body instanceof FormData
+
+        if (!isFormData) {
+            headers['Content-Type'] = 'application/json'
+        }
+
         const response = await fetch(`${this.baseUrl}${endpoint}`, {
-            method: method,
-            headers: headers,
-            body: body ? JSON.stringify(body) : undefined,
+            method,
+            headers,
+            body: body
+                ? isFormData
+                    ? body
+                    : JSON.stringify(body)
+                : undefined,
         })
 
         if (!response.ok) {
@@ -44,13 +58,13 @@ export class BackendClient {
             )
         }
 
-        // Handle empty responses (204, etc.)
         if (response.status === 204) {
             return undefined as T
         }
 
         return response.json() as Promise<T>
     }
+
 
     get<T>(endpoint: string, requiresAuth = true) {
         return this.request<T>('GET', endpoint, undefined, requiresAuth)

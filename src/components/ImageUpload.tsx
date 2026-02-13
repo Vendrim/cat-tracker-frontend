@@ -1,42 +1,39 @@
 import { useState } from 'react'
+import { ImageApi } from '../api/imageApi'
 
-function ImageUpload() {
-    const [file, setFile] = useState(null)
-    const [imageUrl, setImageUrl] = useState(null)
+type Props = {
+    onUpload: (url: string) => void
+}
 
-    // @ts-ignore
+export default function ImageUpload({ onUpload }: Props) {
+    const [file, setFile] = useState<File | null>(null)
+    const imageApi = new ImageApi()
+
     const uploadImage = async () => {
-        const formData = new FormData()
-        formData.append('file', file)
+        if (!file) return
 
-        const res = await fetch(
-            `${import.meta.env.VITE_BACKEND_URL}api/images/upload`,
-            {
-                method: 'POST',
-                body: formData,
-            }
-        )
+        try {
+            //const serverFile = await imageApi.uploadImage(file)
 
-        const filename = await res.text()
-
-        setImageUrl(`${import.meta.env.VITE_BACKEND_URL}api/images/${filename}`)
+            //const imageUrl = `http://localhost:8080/api/images/${serverFile?.filename}`
+            //let imageUrl
+            //imageUrl= imageApi.getImageUrl(serverFile);
+            //onUpload(imageUrl)
+            const serverFilename = await imageApi.uploadImage(file)
+            const imageUrl = imageApi.getImage(serverFilename)
+            onUpload(imageUrl)
+        } catch (error) {
+            console.error('Upload failed:', error)
+        }
     }
 
     return (
         <div>
-            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-
+            <input
+                type="file"
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            />
             <button onClick={uploadImage}>Upload</button>
-
-            {imageUrl && (
-                <img
-                    src={imageUrl}
-                    alt="Uploaded"
-                    style={{ width: '300px', marginTop: '20px' }}
-                />
-            )}
         </div>
     )
 }
-
-export default ImageUpload
