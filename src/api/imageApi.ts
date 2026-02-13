@@ -1,6 +1,6 @@
 import { BackendClient } from './backend'
 import { IMAGE_DOWNLOAD, IMAGE_UPLOAD } from './endpoints'
-import { ImageUploadResponse } from './entities'
+import { ImageUploadResponse, Image } from './entities'
 
 export class ImageApi {
     private backend = new BackendClient()
@@ -12,7 +12,7 @@ export class ImageApi {
         return this.backend.post(IMAGE_UPLOAD, formData)
     }
 
-    getImage(filename: string) {
+    getImage(filename: string): Promise<Image> {
         return this.backend.get(IMAGE_DOWNLOAD.replace('{fileName}', filename))
     }
 }

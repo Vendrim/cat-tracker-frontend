@@ -4,6 +4,7 @@ import ImageUpload from '../components/ImageUpload'
 import defaultAvatar from '../assets/pfp.png'
 import '../layout.css'
 import { ImageApi } from '../api/imageApi'
+import { Image } from '../api/entities'
 
 type Props = {
     children: React.ReactNode
@@ -15,7 +16,7 @@ export default function Layout({ children }: Props) {
 
     const [imageFileName, setImageFileName] = useState<string>()
     const [isOpen, setIsOpen] = useState(false)
-    const [imageData, setImageData] = useState()
+    const [imageData, setImageData] = useState<string>()
 
     const imageApi = new ImageApi()
 
@@ -27,9 +28,8 @@ export default function Layout({ children }: Props) {
         ) {
             imageApi
                 .getImage(imageFileName) //
-                .then((response) => {
+                .then((response: Image) => {
                     setImageData(response?.data)
-                    console.log(response)
                 })
         }
     }, [imageFileName])

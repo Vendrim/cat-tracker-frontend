@@ -30,7 +30,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setToken(storedToken)
         }
         if (
-            (!storedToken && location.pathname !== '/') ||
+            !storedToken &&
+            location.pathname !== '/' &&
             location.pathname !== '/register'
         ) {
             navigate('/')

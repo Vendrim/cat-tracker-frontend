@@ -61,10 +61,8 @@ export default function LoginPage() {
                     <button onClick={handleLogin}>Login</button>
                 </div>
                 <div className={styles.registerContainer}>
-                    <span>
-                        Noch kein Account, dann registriere dich{' '}
-                        <Link to="/register">hier</Link>
-                    </span>
+                    <span>Noch kein Account, dann registriere dich </span>
+                    <Link to="/register">hier</Link>
                 </div>
             </div>
         </div>
