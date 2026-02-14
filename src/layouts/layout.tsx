@@ -5,6 +5,7 @@ import defaultAvatar from '../assets/pfp.png'
 import '../layout.css'
 import { ImageApi } from '../api/imageApi'
 import { Image } from '../api/entities'
+import { ProfileImageApi } from '../api/profileImageApi'
 
 type Props = {
     children: React.ReactNode
@@ -14,25 +15,20 @@ type Props = {
 export default function Layout({ children }: Props) {
     const imageUrl = defaultAvatar
 
-    const [imageFileName, setImageFileName] = useState<string>()
     const [isOpen, setIsOpen] = useState(false)
     const [imageData, setImageData] = useState<string>()
 
-    const imageApi = new ImageApi()
+    const profileImageApi = new ProfileImageApi()
 
     useEffect(() => {
-        if (
-            imageFileName !== undefined &&
-            imageFileName !== null &&
-            imageFileName.length > 0
-        ) {
-            imageApi
-                .getImage(imageFileName) //
+        if (!isOpen) {
+            profileImageApi
+                .getProfileImage() //
                 .then((response: Image) => {
                     setImageData(response?.data)
                 })
         }
-    }, [imageFileName])
+    }, [isOpen])
 
     return (
         <>
@@ -62,12 +58,7 @@ export default function Layout({ children }: Props) {
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <h3>Profilbild ändern</h3>
 
-                        <ImageUpload
-                            onUpload={(filename) => {
-                                setImageFileName(filename)
-                                setIsOpen(false) // Modal schließen
-                            }}
-                        />
+                        <ImageUpload onUpload={() => setIsOpen(false)} />
 
                         <button onClick={() => setIsOpen(false)}>
                             Abbrechen

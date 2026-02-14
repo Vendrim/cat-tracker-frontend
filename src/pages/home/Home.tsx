@@ -8,9 +8,6 @@ import { LocationApi } from '../../api/locationApi'
 import { Device, DeviceLocation } from '../../api/entities'
 
 export default function Home() {
-
-
-
     const [position, setPosition] = useState<LatLngExpression>()
 
     const [devices, setDevices] = useState([])
@@ -62,9 +59,7 @@ export default function Home() {
                         <span>Here you can find/search your cat:</span>
                     </div>
                 </div>
-                <div>
-Ich bin ein text
-                </div>
+
                 {position && (
                     <MapContainer
                         center={position}

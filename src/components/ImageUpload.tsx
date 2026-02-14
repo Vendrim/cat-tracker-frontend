@@ -1,24 +1,21 @@
 import { useState } from 'react'
-import { ImageApi } from '../api/imageApi'
-import { ImageUploadResponse } from '../api/entities'
+import { ProfileImageApi } from '../api/profileImageApi'
 
-type Props = {
-    onUpload: (url: string) => void
-}
-
-export default function ImageUpload({ onUpload }: Props) {
+export default function ImageUpload(props: { onUpload: Function }) {
     const [file, setFile] = useState<File>()
-    const imageApi = new ImageApi()
+    const profileImageApi = new ProfileImageApi()
 
     function uploadImage() {
         if (!file) {
             return
         }
 
-        imageApi
-            .uploadImage(file) //
-            .then((responsingFileName: ImageUploadResponse) => {
-                onUpload(responsingFileName.fileName)
+        profileImageApi
+            .uploadProfileImage(file) //
+            .then((res) => {
+                if (res) {
+                    props.onUpload()
+                }
             })
     }
 
