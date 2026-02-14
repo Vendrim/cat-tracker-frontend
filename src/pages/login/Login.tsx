@@ -48,7 +48,7 @@ export default function LoginPage() {
                     <span>Password: </span>
                     <input
                         value={password}
-                        type="text"
+                        type="password"
                         onChange={(e) => setPassword(e.currentTarget.value)}
                         onKeyUp={(e) => {
                             if (e.key === 'Enter') {
