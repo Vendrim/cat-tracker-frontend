@@ -9,12 +9,16 @@ import toast from 'react-simple-toasts'
 import 'react-simple-toasts/dist/style.css'
 import 'react-simple-toasts/dist/theme/failure.css'
 
+import { ClipLoader } from 'react-spinners'
+
 export default function RegisterPage() {
     const [username, setUsername] = useState<string>()
     const [password, setPassword] = useState<string>()
     const [email, setEmail] = useState<string>()
     const [firstName, setFirstName] = useState<string>()
     const [lastName, setLastName] = useState<string>()
+
+    const [buttonClicked, setButtonClicked] = useState<boolean>(false)
 
     const authApi = new AuthApi()
     const navigate = useNavigate()
@@ -59,7 +63,13 @@ export default function RegisterPage() {
                     theme: 'failure',
                     position: 'top-center',
                 })
+                setButtonClicked(false)
             })
+    }
+
+    function doSignup() {
+        setButtonClicked(true)
+        setTimeout(() => handleSignup(), 50)
     }
 
     return (
@@ -76,7 +86,7 @@ export default function RegisterPage() {
                         onChange={(e) => setFirstName(e.currentTarget.value)}
                         onKeyUp={(e) => {
                             if (e.key === 'Enter' || e.key === 'NumpadEnter') {
-                                handleSignup()
+                                doSignup()
                             }
                         }}
                     />
@@ -87,7 +97,7 @@ export default function RegisterPage() {
                         onChange={(e) => setLastName(e.currentTarget.value)}
                         onKeyUp={(e) => {
                             if (e.key === 'Enter' || e.key === 'NumpadEnter') {
-                                handleSignup()
+                                doSignup()
                             }
                         }}
                     />
@@ -98,7 +108,7 @@ export default function RegisterPage() {
                         onChange={(e) => setUsername(e.currentTarget.value)}
                         onKeyUp={(e) => {
                             if (e.key === 'Enter' || e.key === 'NumpadEnter') {
-                                handleSignup()
+                                doSignup()
                             }
                         }}
                     />
@@ -109,7 +119,7 @@ export default function RegisterPage() {
                         onChange={(e) => setPassword(e.currentTarget.value)}
                         onKeyUp={(e) => {
                             if (e.key === 'Enter' || e.key === 'NumpadEnter') {
-                                handleSignup()
+                                doSignup()
                             }
                         }}
                     />
@@ -120,13 +130,15 @@ export default function RegisterPage() {
                         onChange={(e) => setEmail(e.currentTarget.value)}
                         onKeyUp={(e) => {
                             if (e.key === 'Enter' || e.key === 'NumpadEnter') {
-                                handleSignup()
+                                doSignup()
                             }
                         }}
                     />
                 </div>
                 <div className={styles.loginBtnContainer}>
-                    <button onClick={() => handleSignup()}>Register</button>
+                    <button disabled={buttonClicked} onClick={() => doSignup()}>
+                        {buttonClicked ? <ClipLoader size={16} /> : 'Register'}
+                    </button>
                 </div>
             </div>
         </div>

@@ -9,9 +9,12 @@ import toast from 'react-simple-toasts'
 import 'react-simple-toasts/dist/style.css'
 import 'react-simple-toasts/dist/theme/failure.css'
 
+import { ClipLoader } from 'react-spinners'
+
 export default function LoginPage() {
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [buttonClicked, setButtonClicked] = useState<boolean>(false)
 
     let authApi = new AuthApi()
     const navigate = useNavigate()
@@ -31,7 +34,13 @@ export default function LoginPage() {
                     theme: 'failure',
                     position: 'top-center',
                 })
+                setButtonClicked(false)
             })
+    }
+
+    function doLogin() {
+        setButtonClicked(true)
+        setTimeout(() => handleLogin(), 50)
     }
 
     return (
@@ -54,7 +63,7 @@ export default function LoginPage() {
                         onChange={(e) => setUsername(e.currentTarget.value)}
                         onKeyUp={(e) => {
                             if (e.key === 'Enter') {
-                                handleLogin()
+                                doLogin()
                             }
                         }}
                     />
@@ -65,13 +74,20 @@ export default function LoginPage() {
                         onChange={(e) => setPassword(e.currentTarget.value)}
                         onKeyUp={(e) => {
                             if (e.key === 'Enter') {
-                                handleLogin()
+                                doLogin()
                             }
                         }}
                     />
                 </div>
                 <div className={styles.loginBtnContainer}>
-                    <button onClick={handleLogin}>Login</button>
+                    <button
+                        disabled={buttonClicked}
+                        onClick={() => {
+                            doLogin()
+                        }}
+                    >
+                        {buttonClicked ? <ClipLoader size={16} /> : 'Login'}
+                    </button>
                 </div>
                 <div className={styles.registerContainer}>
                     <span>Noch kein Account, dann registriere dich </span>

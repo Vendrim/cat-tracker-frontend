@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { ProfileImageApi } from '../api/profileImageApi'
+
+import { ClipLoader } from 'react-spinners'
+
 import toast from 'react-simple-toasts'
 import 'react-simple-toasts/dist/style.css'
 import 'react-simple-toasts/dist/theme/failure.css'
@@ -7,6 +10,7 @@ import 'react-simple-toasts/dist/theme/success.css'
 
 export default function ImageUpload(props: { onUpload: Function }) {
     const [file, setFile] = useState<File>()
+    const [buttonClicked, setButtonClicked] = useState<boolean>(false)
     const profileImageApi = new ProfileImageApi()
 
     function uploadImage() {
@@ -30,13 +34,21 @@ export default function ImageUpload(props: { onUpload: Function }) {
                     theme: 'failure',
                     position: 'top-center',
                 })
+                setButtonClicked(false)
             })
+    }
+
+    function doUpload() {
+        setButtonClicked(true)
+        setTimeout(() => uploadImage(), 50)
     }
 
     return (
         <div>
             <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-            <button onClick={uploadImage}>Upload</button>
+            <button disabled={buttonClicked} onClick={doUpload}>
+                {buttonClicked ? <ClipLoader size={16} /> : 'Upload'}
+            </button>
         </div>
     )
 }
