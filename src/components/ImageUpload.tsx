@@ -47,7 +47,7 @@ export default function ImageUpload(props: { onUpload: Function }) {
         <div>
             <input type="file" onChange={(e) => setFile(e.target.files[0])} />
             <button disabled={buttonClicked} onClick={doUpload}>
-                {buttonClicked ? <ClipLoader size={16} /> : 'Upload'}
+                {buttonClicked ? <ClipLoader size={12} /> : 'Upload'}
             </button>
         </div>
     )
