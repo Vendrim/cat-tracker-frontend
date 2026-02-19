@@ -5,6 +5,10 @@ import { RegisterUserDto } from '../../api/entities'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../providers/authProvider'
 
+import toast from 'react-simple-toasts'
+import 'react-simple-toasts/dist/style.css'
+import 'react-simple-toasts/dist/theme/failure.css'
+
 export default function RegisterPage() {
     const [username, setUsername] = useState<string>()
     const [password, setPassword] = useState<string>()
@@ -43,10 +47,19 @@ export default function RegisterPage() {
             fullName: firstName + ' ' + lastName,
         }
 
-        authApi.signup(registerDto).then((res) => {
-            login(res.jwtToken)
-            navigate('/home')
-        })
+        authApi
+            .signup(registerDto) //
+            .then((res) => {
+                login(res.jwtToken)
+                navigate('/home')
+            })
+            .catch((err) => {
+                console.error(err)
+                toast('Der Server scheint nicht erreichbar zu sein.', {
+                    theme: 'failure',
+                    position: 'top-center',
+                })
+            })
     }
 
     return (

@@ -54,11 +54,7 @@ export default function Home() {
     return (
         <Layout>
             <div className="main-container">
-                <div className="content-container">
-                    <div className="content-card">
-                        <span>Here you can find/search your cat:</span>
-                    </div>
-                </div>
+                <div className="content-container"></div>
 
                 {position && (
                     <MapContainer

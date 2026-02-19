@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import { ProfileImageApi } from '../api/profileImageApi'
+import toast from 'react-simple-toasts'
+import 'react-simple-toasts/dist/style.css'
+import 'react-simple-toasts/dist/theme/failure.css'
+import 'react-simple-toasts/dist/theme/success.css'
 
 export default function ImageUpload(props: { onUpload: Function }) {
     const [file, setFile] = useState<File>()
@@ -15,7 +19,17 @@ export default function ImageUpload(props: { onUpload: Function }) {
             .then((res) => {
                 if (res) {
                     props.onUpload()
+                    toast('Profilbild aktualisiert', {
+                        theme: 'success',
+                        position: 'top-center',
+                    })
                 }
+            })
+            .catch((_) => {
+                toast('Falscher Dateityp', {
+                    theme: 'failure',
+                    position: 'top-center',
+                })
             })
     }
 

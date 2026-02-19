@@ -5,7 +5,6 @@ export interface BackendClientOptions {
     getToken?: () => string | null // token provider (e.g. from localStorage)
 }
 
-
 //Explanation:
 // Using FormData it isn't allowed to sed Content-Type by yourself.
 
@@ -23,7 +22,6 @@ export class BackendClient {
         body?: unknown,
         requiresAuth: boolean = true
     ): Promise<T> {
-
         const headers: HeadersInit = {}
 
         // JWT setzen
@@ -44,18 +42,12 @@ export class BackendClient {
         const response = await fetch(`${this.baseUrl}${endpoint}`, {
             method,
             headers,
-            body: body
-                ? isFormData
-                    ? body
-                    : JSON.stringify(body)
-                : undefined,
+            body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
         })
 
         if (!response.ok) {
             const text = await response.text()
-            throw new Error(
-                `HTTP ${response.status}: ${text || response.statusText}`
-            )
+            throw new Error(text || response.statusText)
         }
 
         if (response.status === 204) {
@@ -64,7 +56,6 @@ export class BackendClient {
 
         return response.json() as Promise<T>
     }
-
 
     get<T>(endpoint: string, requiresAuth = true) {
         return this.request<T>('GET', endpoint, undefined, requiresAuth)
