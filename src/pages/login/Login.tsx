@@ -5,6 +5,10 @@ import { AuthApi } from '../../api/authApi'
 import { LoginUserDto } from '../../api/entities'
 import { useAuth } from '../../providers/authProvider'
 
+import toast from 'react-simple-toasts'
+import 'react-simple-toasts/dist/style.css'
+import 'react-simple-toasts/dist/theme/failure.css'
+
 export default function LoginPage() {
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -15,10 +19,19 @@ export default function LoginPage() {
 
     function handleLogin() {
         let loginDto: LoginUserDto = { username: username, password: password }
-        authApi.login(loginDto).then((res) => {
-            login(res.jwtToken)
-            navigate('/home')
-        })
+        authApi
+            .login(loginDto)
+            .then((res) => {
+                login(res.jwtToken)
+                navigate('/home')
+            })
+            .catch((err) => {
+                console.error(err)
+                toast('Die Logindaten scheinen falsch zu sein.', {
+                    theme: 'failure',
+                    position: 'top-center',
+                })
+            })
     }
 
     return (
