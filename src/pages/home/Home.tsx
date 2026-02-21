@@ -54,24 +54,24 @@ export default function Home() {
     return (
         <Layout>
             <div className="main-container">
-                <div className="content-container"></div>
+                <div style={{ paddingTop: '25px' }}>
+                    {position && (
+                        <MapContainer
+                            center={position}
+                            zoom={13}
+                            style={{ height: '85vh', width: '100%' }}
+                        >
+                            <TileLayer
+                                attribution="© OpenStreetMap contributors"
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
 
-                {position && (
-                    <MapContainer
-                        center={position}
-                        zoom={13}
-                        style={{ height: '400px', width: '100%' }}
-                    >
-                        <TileLayer
-                            attribution="© OpenStreetMap contributors"
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-
-                        <Marker position={position}>
-                            <Popup>Marker text</Popup>
-                        </Marker>
-                    </MapContainer>
-                )}
+                            <Marker position={position}>
+                                <Popup>Marker text</Popup>
+                            </Marker>
+                        </MapContainer>
+                    )}
+                </div>
             </div>
         </Layout>
     )
