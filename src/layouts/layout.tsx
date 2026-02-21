@@ -26,14 +26,14 @@ export default function Layout({ children }: Props) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!isOpen) {
+        if (!profileImageOpen) {
             profileImageApi
                 .getProfileImage() //
                 .then((response: Image) => {
                     setImageData(response?.data)
                 })
         }
-    }, [isOpen])
+    }, [profileImageOpen])
 
     return (
         <>
