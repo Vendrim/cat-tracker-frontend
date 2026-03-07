@@ -12,6 +12,8 @@ export default function Home() {
 
     const [devices, setDevices] = useState([])
 
+    const [pollingCounter, setPollingCounter] = useState(0)
+
     const deviceApi = new DeviceApi()
     const locationApi = new LocationApi()
 
@@ -45,11 +47,14 @@ export default function Home() {
                 .getLocationsForDevice(device) //
                 .then((res: DeviceLocation[]) => {
                     if (res) {
-                        setPosition(locationToLatLngExpression(res[0]))
+                        setPosition(
+                            locationToLatLngExpression(res[res.length - 1])
+                        )
                     }
                 })
         }
-    }, [devices])
+        setTimeout(() => setPollingCounter((prev) => prev + 1), 2000)
+    }, [devices, pollingCounter])
 
     return (
         <Layout>
