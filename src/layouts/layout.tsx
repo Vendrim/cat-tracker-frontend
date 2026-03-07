@@ -38,10 +38,13 @@ export default function Layout({ children }: Props) {
     return (
         <>
             <nav className={styles.menuBar}>
-                <Link to="/">
+                <Link to="/home">
                     <span>Cat Tracker</span>
                 </Link>
-                <div className={styles.profileImg}>
+                <div
+                    className={styles.profileImg}
+                    onBlur={() => setIsOpen(false)}
+                >
                     <img
                         src={
                             imageData
@@ -63,6 +66,14 @@ export default function Layout({ children }: Props) {
                             }}
                         >
                             <span>Profilbild ändern</span>
+                        </div>
+                        <div
+                            className={styles.optionsMenuItem}
+                            onClick={() => {
+                                navigate('/devices')
+                            }}
+                        >
+                            <span>Geräte</span>
                         </div>
                         <div
                             className={`${styles.optionsMenuItem} ${isLoggingOut ? styles.loggingOut : ''}`}
